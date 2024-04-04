@@ -94,6 +94,7 @@ impl RawGtfs {
     ///
     /// The library must be built with the read-url feature
     #[cfg(feature = "read-url")]
+    #[cfg(feature = "blocking")]
     pub fn from_url<U: reqwest::IntoUrl>(url: U) -> Result<Self, Error> {
         GtfsReader::default().raw().read_from_url(url)
     }

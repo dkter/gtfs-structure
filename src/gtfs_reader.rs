@@ -108,6 +108,7 @@ impl GtfsReader {
     ///
     /// The library must be built with the read-url feature
     #[cfg(feature = "read-url")]
+    #[cfg(feature = "blocking")]
     pub fn read_from_url<U: reqwest::IntoUrl>(self, url: U) -> Result<Gtfs, Error> {
         self.raw().read_from_url(url).and_then(Gtfs::try_from)
     }
@@ -198,6 +199,7 @@ impl RawGtfsReader {
     /// or a local path (either a directory or zipped file)
     pub fn read(self, gtfs: &str) -> Result<RawGtfs, Error> {
         #[cfg(feature = "read-url")]
+        #[cfg(feature = "blocking")]
         if gtfs.starts_with("http") {
             return self.read_from_url(gtfs);
         }
@@ -206,6 +208,7 @@ impl RawGtfsReader {
 
     /// Reads the GTFS from a remote url
     #[cfg(feature = "read-url")]
+    #[cfg(feature = "blocking")]
     pub fn read_from_url<U: reqwest::IntoUrl>(self, url: U) -> Result<RawGtfs, Error> {
         let mut res = reqwest::blocking::get(url)?;
         let mut body = Vec::new();

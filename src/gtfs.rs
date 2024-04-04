@@ -115,6 +115,7 @@ impl Gtfs {
     ///
     /// The library must be built with the read-url feature
     #[cfg(feature = "read-url")]
+    #[cfg(feature = "blocking")]
     pub fn from_url<U: reqwest::IntoUrl>(url: U) -> Result<Gtfs, Error> {
         RawGtfs::from_url(url).and_then(Gtfs::try_from)
     }
